@@ -1,0 +1,15 @@
+{% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li>{{ message }}</br> {{message.content}}</li>
+        </br> 
+    {% endfor %}
+    </ul>
+{% else %}
+     <p>No messages yet.</p>
+{% endif %}
+
+<form action="{% url 'board:index'%}" method="post">
+{% csrf_token %}
+{{ form }}
+<input type="submit" value="Post" />
