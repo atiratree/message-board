@@ -2,13 +2,44 @@ ul {
     color: #5A5A5A;
 	list-style-type: none;
 	padding: 0px;
+	margin-top: 5px; 
+	margin-bottom: 8px; 
+}
+ul.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li.navbar {
+    float: left;
+}
+li.navbar.right{
+    float: right;
+}
+li.navbar a {
+	font-size: 1.5em;
+	display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li.navbar a:hover {
+    background-color: #111;
 }
 
 .msgcontainer {
-	border-color: #DEDEDE;
+	border-color: #C9E4FF;
 	border-width: 1px;
 	border-style: solid;
 	margin-bottom: 5px;
+}
+.formcontainer {
+	background-color: #F1F8FF;
 }
 
 .msginfo {
@@ -25,6 +56,7 @@ ul {
 }
 
 .msgform {
+	background-color: #EFF7FF;
 	border-color: #DEDEDE;
 	border-width: 1px;
 	border-style: solid;
@@ -53,7 +85,6 @@ ul {
 }
 
 .right {
-	text-align: right;
 	float: right;
 }
 
