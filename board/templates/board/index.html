@@ -1,15 +1,24 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
 {% if messages %}
     <ul>
     {% for message in messages %}
-        <li>{{ message }}</br> {{message.content}}</li>
-        </br> 
-    {% endfor %}
+		<div class="msgcontainer">
+			<li class="msginfo">{{ message.author }}: {{message.title}} 
+				<span class="right date">{{message.date}}</span></li>
+			<li class="msgcontent">{{message.content}}</li>
+		</div>
+	{% endfor %}
     </ul>
 {% else %}
      <p>No messages yet.</p>
 {% endif %}
 
-<form action="{% url 'board:index'%}" method="post">
-{% csrf_token %}
-{{ form }}
-<input type="submit" value="Post" />
+{% if auth %}
+<div >
+	<form class="msgform" action="{% url 'board:index'%}" method="post">
+	{% csrf_token %}
+	{{ form }}
+	<input type="submit" value="Post" class="btn_submit right" />
+</div>
+{% endif %}
