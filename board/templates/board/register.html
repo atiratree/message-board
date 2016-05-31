@@ -1,9 +1,9 @@
-{% if errorMsg %}
-<p>{{errorMsg}}</p>
-{% endif %}
+{% extends "board/base.html" %}
 
-<form method="post" action="{% url 'board:register'%}">
-{% csrf_token %}
+{% block content %}
+<form class="formcontainer" method="post" action="{% url 'board:register'%}">
+	{% csrf_token %}
     {{form}}
-	<input type="submit" value="register" />
+	<input class="btn_submit center-btn" type="submit" value="register" />
 </form>
+{% endblock content %}

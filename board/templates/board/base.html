@@ -1,0 +1,27 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Wow, such secure. So ssl!</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+    </head>
+
+    <body>
+		<ul class="navbar">
+			<li class="navbar"><a href="{% url 'board:index'%}">Home</a></li>
+			{% if auth %}
+			<li class="navbar right"><a href="{% url 'board:logout'%}">logout</a></li>
+			{% else %}
+			<li class="navbar right"><a href="{% url 'board:login'%}">login</a></li>
+			<li class="navbar right"><a href="{% url 'board:register'%}">register</a></li>
+			{% endif %}
+			<li class="navbar right"><a href="#">search</a></li>
+		</ul>
+	{% if errorMsg %}
+		<p class="error">{{errorMsg}}</p>
+	{% endif %}
+	
+    {% block content %}
+	{% endblock content %}
+    </body>
+</html>

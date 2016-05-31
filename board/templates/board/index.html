@@ -1,15 +1,6 @@
-{% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
-<ul class="navbar">
-	<li class="navbar"><a href="{% url 'board:index'%}">Home</a></li>
-	{% if auth %}
-	<li class="navbar right"><a href="{% url 'board:logout'%}">logout</a></li>
-	{% else %}
-	<li class="navbar right"><a href="{% url 'board:login'%}">login</a></li>
-	<li class="navbar right"><a href="{% url 'board:register'%}">register</a></li>
-	{% endif %}
-	<li class="navbar right"><a href="#">search</a></li>
-</ul>
+{% extends "board/base.html" %}
+
+{% block content %}
 {% if messages %}
     <ul>
     {% for message in messages %}
@@ -26,9 +17,10 @@
 
 {% if auth %}
 <div class="formcontainer">
-	<form class="msgform" action="{% url 'board:index'%}" method="post">
+	<form  action="{% url 'board:index'%}" method="post">
 	{% csrf_token %}
 	{{ form }}
 	<input type="submit" value="Post" class="btn_submit right" />
 </div>
 {% endif %}
+{% endblock content %}
