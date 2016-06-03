@@ -1,6 +1,14 @@
 {% extends "board/base.html" %}
 
 {% block content %}
+<div class="formcontainer">
+	<form  action="{% url 'board:index'%}?search=true" method="post">
+		{% csrf_token %}
+		{{ search_form }}
+		<input type="submit" value="Search" class="btn_submit blue-search right" />
+	</form>
+</div>
+<div>
 {% if messages %}
     <ul>
     {% for message in messages %}
@@ -12,15 +20,36 @@
 	{% endfor %}
     </ul>
 {% else %}
-     <p>No messages yet.</p>
+     <p class="no-messages"><label>No messages <label></p>
 {% endif %}
-
+</div>
 {% if auth %}
 <div class="formcontainer">
-	<form  action="{% url 'board:index'%}" method="post">
-	{% csrf_token %}
-	{{ form }}
-	<input type="submit" value="Post" class="btn_submit right" />
+	<form  action="{% url 'board:index'%}?search=false" method="post">
+		{% csrf_token %}
+		{{ form }}
+		<span class="submit-message">
+			<input type="submit" value="Post" class="btn_submit right" style="margin-top:0.5em"/>
+		</span>
+	</form>
 </div>
 {% endif %}
+
+<div class="pagination right-with-padding">
+    <span class="step-links">
+        {% if messages.has_previous %}
+            <a href="?page={{ messages.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ messages.number }} of {{ messages.paginator.num_pages }}
+        </span>
+
+        {% if messages.has_next %}
+            <a href="?page={{ messages.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+
 {% endblock content %}

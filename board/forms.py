@@ -16,3 +16,9 @@ class RegisterForm(forms.Form):
 		attrs={'class': 'textinput'}), max_length=64)
 	password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'textinput'}))
 	password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput(attrs={'class': 'textinput'}))
+
+class SearchForm(forms.Form):
+    search = forms.CharField(required=False, label='', widget=forms.TextInput(
+        attrs={'placeholder': 'Search', 'class': 'textinput-search'}), max_length=50)
+    searchAuthor = forms.CharField(required=False, label='', widget=forms.TextInput(
+        attrs={'placeholder': 'Search author', 'class': 'textinput-search'}), max_length=20)
