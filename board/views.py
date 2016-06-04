@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic import DeleteView
+from django.core.urlresolvers import reverse_lazy
 
 from board.forms import MessageForm, LoginForm, RegisterForm, SearchForm
 from board.models import Message
@@ -83,7 +85,7 @@ def register(request):
                 if len(password) > 7:
                     try:
                         User.objects.create_user(username, None, password)
-                        return render(request, 'board/login.html', {'errorMsg': 'user created! pls login', 'form':LoginForm()})
+                        return render(request, 'board/login.html', {'errorMsg': 'user created! please login', 'form':LoginForm()})
                     except:
                         errorMessage = 'Username taken!'
                 else:
@@ -91,7 +93,7 @@ def register(request):
             else:
                 errorMessage = 'Passwords didn\'t match'
         else:
-            errorMessage = 'Pls fill all forms and repeat the password twice'
+            errorMessage = 'Please fill all forms and repeat the password twice'
 
     context = {'form': RegisterForm(initial={'username': username})}
     if errorMessage is not None:
@@ -116,3 +118,7 @@ def __get_paginated_objects(objects , page, pages):
 
 def __clean_session(request):
     request.session.pop(SEARCH_SESSION, None)
+
+class PostDelete(DeleteView):
+    model = Message
+    success_url = reverse_lazy('board:index')

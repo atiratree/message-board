@@ -14,7 +14,13 @@
     {% for message in messages %}
 		<div class="msgcontainer">
 			<li class="msginfo">{{message.title}} 
-				<span class="right date"><strong>{{ message.author }}</strong> @ {{message.date}}</span></li>
+				<span class="right date">
+				<form action="{% url 'board:delete' message.id %}" method="post">
+				{% csrf_token %}
+				{% if message.author == user %}
+					<input type="submit" value="Delete" class="btn_delete" style="margin-bottom:0.4em"/>
+				{% endif %}
+				<strong>{{ message.author }}</strong> @ {{message.date}}</span></form></li>
 			<li class="msgcontent">{{message.content}}</li>
 		</div>
 	{% endfor %}

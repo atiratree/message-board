@@ -107,6 +107,17 @@ li.navbar a:hover {
     text-align: center;
 }
 
+.btn_delete {
+	background-color: #4D99C7;
+	font-size: 1em;
+	color: black;
+}
+
+.btn_delete:hover {
+	background-color: #FEFF65;
+	color: gray;
+}
+
 .btn_submit:hover{
 	background-color: #FEFF65;
 	color: gray;
