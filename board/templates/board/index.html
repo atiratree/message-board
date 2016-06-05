@@ -21,7 +21,7 @@
 					<input type="submit" value="Delete" class="btn_delete" style="margin-bottom:0.4em"/>
 				{% endif %}
 				<strong>{{ message.author }}</strong> @ {{message.date}}</span></form></li>
-			<li class="msgcontent">{{message.content}}</li>
+			<li class="msgcontent">{{message.content | safe}}</li>
 		</div>
 	{% endfor %}
     </ul>

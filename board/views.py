@@ -7,6 +7,8 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import DeleteView
 from django.core.urlresolvers import reverse_lazy
+import datetime
+from datetime import date
 
 from board.forms import MessageForm, LoginForm, RegisterForm, SearchForm
 from board.models import Message
@@ -17,12 +19,16 @@ ITEMS_PER_PAGE = 10
 
 def index(request):
     form = None
-
     if request.method == 'POST':
         if request.GET.get(SEARCH_PARAM) == "false":
             reqForm = MessageForm(request.POST)
             if request.user.is_authenticated() and reqForm.is_valid():
-                msg = Message(date=timezone.now(), title=reqForm.cleaned_data["title"], content=reqForm.cleaned_data["content"], author=request.user)
+                msg_temp = content=reqForm.cleaned_data["content"]
+                mylist = [i.rstrip(":;") for i in msg_temp.split() if i] # remove blanks
+                hashtagged = [i for i in mylist if i.startswith("#")]
+                for hashtag in hashtagged:
+                    msg_temp = msg_temp.replace(hashtag,"<a href='/?search=true/?tag="+ hashtag[1:] +"' method=\"post\">" + hashtag + "</a>")
+                msg = Message(date=timezone.now(), title=reqForm.cleaned_data["title"], content=msg_temp, author=request.user)
                 msg.save()
                 __clean_session(request)
                 return redirect(reverse('board:index'))
@@ -37,11 +43,15 @@ def index(request):
     if form is None:
         form = MessageForm()
 
-    filterContent, filterAuthor = __getFilters(request)
-    searchForm = SearchForm(initial={'search': filterContent, 'searchAuthor': filterAuthor })
+    filterContent, filterAuthor, filterDate = __getFilters(request)
+    searchForm = SearchForm(initial={'search': filterContent, 'searchAuthor': filterAuthor, 'searchDate': filterDate })
 
     dbMessages = Message.objects.filter((Q(title__icontains=filterContent) | Q(content__icontains=filterContent))
                                          & Q(author__username__icontains=filterAuthor)).order_by('-date')
+    #if type(filterDate) is not None:
+        #print(filterDate.strftime())
+        #dbMessages = dbMessages.filter(date__icontains=filterDate)
+
     messages = __get_paginated_objects(dbMessages , request.GET.get('page'), ITEMS_PER_PAGE)
 
     context = {'messages': messages, 'form': form, 'auth': request.user.is_authenticated(), 'search_form':searchForm}
@@ -103,8 +113,8 @@ def register(request):
 def __getFilters(request):
     if SEARCH_SESSION in request.session.keys():
         searchData = request.session[SEARCH_SESSION]
-        return searchData['search'], searchData['searchAuthor']
-    return '', ''
+        return searchData['search'], searchData['searchAuthor'], searchData['searchDate']
+    return '', '',''
 
 
 def __get_paginated_objects(objects , page, pages):
