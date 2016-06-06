@@ -18,7 +18,7 @@
 				<form action="{% url 'board:delete' message.id %}" method="post">
 				{% csrf_token %}
 				{% if message.author == user %}
-					<input type="submit" value="Delete" class="btn_delete" style="margin-bottom:0.4em"/>
+					<input type="submit" value="x" class="btn_delete"/>
 				{% endif %}
 				<strong>{{ message.author }}</strong> @ {{message.date}}</span></form></li>
 			<li class="msgcontent">{{message.content}}</li>
@@ -28,6 +28,22 @@
 {% else %}
      <p class="no-messages"><label>No messages <label></p>
 {% endif %}
+</div>
+<div class="paginator">
+	{% if messages.has_previous %}
+	<span class="left">
+		<a href="?page={{ messages.previous_page_number }}">< previous page</a>
+	</span>
+	{% endif %}
+	{% if messages.has_next %}
+	<span class="right">
+		<a href="?page={{ messages.next_page_number }}">next page ></a>
+	</span>
+	{% endif %}
+	<span class="centered">
+		{{ messages.number }} / {{ messages.paginator.num_pages }}
+	</span>
+
 </div>
 {% if auth %}
 <div class="formcontainer">
@@ -40,22 +56,4 @@
 	</form>
 </div>
 {% endif %}
-
-<div class="pagination right-with-padding">
-    <span class="step-links">
-        {% if messages.has_previous %}
-            <a href="?page={{ messages.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ messages.number }} of {{ messages.paginator.num_pages }}
-        </span>
-
-        {% if messages.has_next %}
-            <a href="?page={{ messages.next_page_number }}">next</a>
-        {% endif %}
-    </span>
-</div>
-
-
 {% endblock content %}
