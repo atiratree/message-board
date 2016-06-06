@@ -8,20 +8,21 @@
     </head>
 
     <body>
-		<ul class="navbar">
-			<li class="navbar"><a href="{% url 'board:index'%}">Home</a></li>
-			{% if auth %}
-			<li class="navbar right"><a href="{% url 'board:logout'%}">logout</a></li>
-			{% else %}
-			<li class="navbar right"><a href="{% url 'board:login'%}">login</a></li>
-			<li class="navbar right"><a href="{% url 'board:register'%}">register</a></li>
-			{% endif %}
-		</ul>
-	{% if errorMsg %}
-		<p class="error">{{errorMsg}}</p>
-	{% endif %}
-	
-    {% block content %}
-	{% endblock content %}
+		<div class="container" >
+			<ul class="navbar">
+				<li class="navbar"><a href="{% url 'board:index'%}">Home</a></li>
+				{% if auth %}
+				<li class="navbar right"><a href="{% url 'board:logout'%}">logout</a></li>
+				{% else %}
+				<li class="navbar right"><a href="{% url 'board:login'%}">login</a></li>
+				<li class="navbar right"><a href="{% url 'board:register'%}">register</a></li>
+				{% endif %}
+			</ul>
+		{% if errorMsg %}
+			<p class="error">{{errorMsg}}</p>
+		{% endif %}
+	    {% block content %}
+		{% endblock content %}
+		</div>
     </body>
 </html>
