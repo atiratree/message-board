@@ -17,10 +17,12 @@
 				<span class="right date">
 				<form action="{% url 'board:delete' message.id %}" method="post">
 				{% csrf_token %}
+				<strong>{{ message.author }}</strong> @ {{message.date}}</span>
 				{% if message.author == user %}
-					<input type="submit" value="x" class="btn_delete"/>
+					<input type="submit" value="x" class="btn_delete"/>	
 				{% endif %}
-				<strong>{{ message.author }}</strong> @ {{message.date}}</span></form></li>
+				</form>
+				</li>
 			<li class="msgcontent">{{message.content}}</li>
 		</div>
 	{% endfor %}
@@ -29,7 +31,19 @@
      <p class="no-messages"><label>No messages <label></p>
 {% endif %}
 </div>
-<div class="paginator">
+
+{% if auth %}
+<div class="formcontainer">
+	<form  action="{% url 'board:index'%}?search=false" method="post">
+		{% csrf_token %}
+		{{ form }}
+		<span class="submit-message">
+			<input type="submit" value="Post" class="btn_submit right" style="margin-top:0.5em"/>
+		</span>
+	</form>
+</div>
+{% endif %}
+<div class="paginator upper-border">
 	{% if messages.has_previous %}
 	<span class="left">
 		<a href="?page={{ messages.previous_page_number }}">< previous page</a>
@@ -45,15 +59,4 @@
 	</span>
 
 </div>
-{% if auth %}
-<div class="formcontainer">
-	<form  action="{% url 'board:index'%}?search=false" method="post">
-		{% csrf_token %}
-		{{ form }}
-		<span class="submit-message">
-			<input type="submit" value="Post" class="btn_submit right" style="margin-top:0.5em"/>
-		</span>
-	</form>
-</div>
-{% endif %}
 {% endblock content %}
