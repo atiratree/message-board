@@ -109,10 +109,10 @@ li.navbar a:hover {
 
 .btn_delete {
 	background-color: #f0f0f0;
-	margin-bottom:0.5em;
+	margin-left: 0.1em;
 	border: none;
 	font-size: 1em;
-	color: red;
+	color: #FD6464;
 }
 
 .btn_delete:hover {
@@ -135,6 +135,10 @@ li.navbar a:hover {
 	margin: auto;
 	width: 10em;
 	display: block;
+}
+
+.no-padding {
+	padding: 0 !important;
 }
 
 .right-with-padding {
@@ -168,9 +172,13 @@ li.navbar a:hover {
 	padding: 10px;
 }
 
+.wide-btn {
+	width: 9em !important;
+}
+
 .date {
 	padding-top: 5px;
-	font-size: 15px;
+	font-size: 0.6em;
 }
 
 .submit-message {

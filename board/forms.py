@@ -19,6 +19,6 @@ class RegisterForm(forms.Form):
 
 class SearchForm(forms.Form):
     search = forms.CharField(required=False, label='', widget=forms.TextInput(
-        attrs={'placeholder': 'Search', 'class': 'textinput-search'}), max_length=50)
+        attrs={'placeholder': 'Search', 'class': 'form-control'}), max_length=50)
     searchAuthor = forms.CharField(required=False, label='', widget=forms.TextInput(
-        attrs={'placeholder': 'Search author', 'class': 'textinput-search'}), max_length=20)
+        attrs={'placeholder': 'Search author', 'class': 'form-control'}), max_length=20)
